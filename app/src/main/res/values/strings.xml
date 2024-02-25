@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Commbucks</string>
+    <string name="app_name">Общак</string>
+    <string name="events_title">События</string>
 </resources>
