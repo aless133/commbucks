@@ -96,6 +96,8 @@ fun EventsTopBar() {
 @Composable
 fun EventsAddButton() {
     FloatingActionButton(
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
         onClick = { },
     ) {
         Icon(Icons.Filled.Add, "Floating action button.")
