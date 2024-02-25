@@ -7,4 +7,6 @@ data class EventNew(
 data class Event(
     val id: String,
     var name: String,
+    var count: Int,
+    var budget: Number,
 );

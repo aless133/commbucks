@@ -1,21 +1,34 @@
 package com.aless133.commbucks.ui
 
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aless133.commbucks.R
+import com.aless133.commbucks.ui.theme.CommbucksTheme
 import com.example.commbucks.model.Event
 
 @Composable
@@ -24,15 +37,59 @@ fun EventsScreen(
 ) {
     val state by eventsViewModel.state.collectAsState()
     Log.d("EVENTSSCREEN", state.events.toString())
-    Scaffold { paddingValues ->
-        LazyColumn(contentPadding = paddingValues) {
+    Scaffold(
+        topBar = { EventsTopBar() },
+        floatingActionButton = { EventsAddButton() }
+//        modifier = Modifier
+//            .padding(dimensionResource(R.dimen.padding_small))
+    ) { paddingValues ->
+        LazyColumn(
+            contentPadding = paddingValues,
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small)),
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_small)),
+        ) {
             items(state.events) { event ->
-                EventItem(
-                    event = event,
-//                modifier = Modifier.padding(8.dp)
-                )
+                EventItem(event = event)
             }
         }
+    }
+}
+
+@Composable
+fun EventsTopBar() {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(dimensionResource(R.dimen.padding_small)),
+    ) {
+        Text(
+            text = stringResource(R.string.events_title),
+//            modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_medium)),
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.headlineMedium,
+        )
+//        IconButton(
+//            onClick = onShareButtonClicked,
+//            modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_medium)),
+//        ) {
+//            Icon(
+//                imageVector = Icons.Filled.Share,
+//                contentDescription = stringResource(R.string.share),
+//                tint = MaterialTheme.colorScheme.onPrimary
+//            )
+//        }
+    }
+}
+
+@Composable
+fun EventsAddButton() {
+    FloatingActionButton(
+        onClick = {  },
+    ) {
+        Icon(Icons.Filled.Add, "Floating action button.")
     }
 }
 
@@ -41,13 +98,25 @@ fun EventItem(event: Event) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
-//        modifier = modifier,
-        //modifier = modifier
+            .wrapContentHeight()
+//            .padding(dimensionResource(id = R.dimen.padding_small))
+    )
+    //        modifier = modifier,
+    //modifier = modifier
 //        border = BorderStroke(width = 1.dp, color = Color.Red)
-    ) {
+    {
         Text(
             text = event.name,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EventsScreenPreview() {
+    CommbucksTheme {
+        EventsScreen()
     }
 }
