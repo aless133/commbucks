@@ -1,7 +1,10 @@
 package com.example.commbucks.model
 
-data class Event(
-    val id: Int,
-    val name: String,
-    val hash: String,
+data class EventNew(
+    var name: String,
 )
+
+data class Event(
+    val id: String,
+    var name: String,
+);

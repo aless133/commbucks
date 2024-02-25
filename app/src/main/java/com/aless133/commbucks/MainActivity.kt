@@ -16,7 +16,7 @@ import com.aless133.commbucks.ui.theme.CommbucksTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
             CommbucksTheme {
