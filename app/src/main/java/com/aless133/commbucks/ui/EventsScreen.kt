@@ -45,7 +45,7 @@ fun EventsScreen(
     eventsViewModel: EventsViewModel = viewModel()
 ) {
     val state by eventsViewModel.state.collectAsState()
-    Log.d("EVENTSSCREEN", state.events.toString())
+
     Scaffold(
         topBar = { EventsTopBar() },
         floatingActionButton = { EventsAddButton() }

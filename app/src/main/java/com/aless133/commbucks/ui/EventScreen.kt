@@ -27,13 +27,14 @@ fun EventScreen(
 //    eventsViewModel: EventsViewModel = viewModel()
 ) {
     val navController = LocalNavController.current
+
     Column {
         Text(
             text = "Второй экран",
         )
         Button(
             onClick = {
-                navController.navigate(CommbucksScreen.Events.name);
+                navController.navigateUp() //(CommbucksScreen.Events.name);
             },
         ) {
             Text(

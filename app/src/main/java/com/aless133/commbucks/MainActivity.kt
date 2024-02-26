@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -56,36 +57,33 @@ class MainActivity : ComponentActivity() {
                         ) {
                             composable(route = CommbucksScreen.Events.name,
                                 exitTransition = {
-//                                    slideOutHorizontally(
-//                                        animationSpec = spring(
-//                                            dampingRatio = Spring.DampingRatioNoBouncy,
-//                                            stiffness = Spring.StiffnessMedium
-//                                        ),
-//                                        targetOffsetX  = { it }
-//                                    )
                                     slideOutOfContainer(
                                         AnimatedContentTransitionScope.SlideDirection.Left,
-                                        animationSpec = tween(700)
+                                        animationSpec = tween(400, 0, LinearOutSlowInEasing)
                                     )
-                                }) {
+                                },
+                                popEnterTransition = {
+                                    slideIntoContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Right,
+                                        animationSpec = tween(400, 0, LinearOutSlowInEasing)
+                                    )
+                                }
+                            ) {
                                 EventsScreen()
                             }
                             composable(
                                 route = CommbucksScreen.Event.name,
                                 enterTransition = {
-//                                    slideInHorizontally(
-//                                        animationSpec = spring(
-//                                            dampingRatio = Spring.DampingRatioNoBouncy,
-//                                            stiffness = Spring.StiffnessMedium
-//                                        ),
-//                                        initialOffsetX = { -it }
-//                                    )
                                     slideIntoContainer(
                                         AnimatedContentTransitionScope.SlideDirection.Left,
-                                        animationSpec = tween(700)
+                                        animationSpec = tween(400, 0, LinearOutSlowInEasing)
                                     )
-
-
+                                },
+                                popExitTransition = {
+                                    slideOutOfContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Right,
+                                        animationSpec = tween(400, 0, LinearOutSlowInEasing)
+                                    )
                                 }
                             ) {
                                 EventScreen()
