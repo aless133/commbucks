@@ -33,6 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
+import com.aless133.commbucks.CommbucksScreen
+import com.aless133.commbucks.LocalNavController
 import com.aless133.commbucks.R
 import com.aless133.commbucks.ui.theme.CommbucksTheme
 import com.example.commbucks.model.Event
@@ -106,6 +109,7 @@ fun EventsAddButton() {
 
 @Composable
 fun EventItem(event: Event) {
+    val navController = LocalNavController.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -144,7 +148,11 @@ fun EventItem(event: Event) {
                 }
             }
             IconButton(
-                onClick = { },
+                onClick = {
+                    Log.d("NAVIGATE", CommbucksScreen.Event.name);
+                    Log.d("NAVIGATE", navController.toString());
+                    navController.navigate(CommbucksScreen.Event.name);
+                },
             ) {
                 Icon(
                     imageVector = Icons.Filled.KeyboardArrowRight,
