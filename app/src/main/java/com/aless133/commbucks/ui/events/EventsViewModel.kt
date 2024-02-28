@@ -1,4 +1,4 @@
-package com.aless133.commbucks.ui
+package com.aless133.commbucks.ui.events
 
 import androidx.lifecycle.ViewModel
 import com.aless133.commbucks.data.getEvents
