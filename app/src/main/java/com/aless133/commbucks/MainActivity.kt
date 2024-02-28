@@ -10,6 +10,8 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,20 +25,24 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.aless133.commbucks.ui.EventsScreen
+import androidx.navigation.NavGraphBuilder
 import com.aless133.commbucks.ui.theme.CommbucksTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aless133.commbucks.ui.EventScreen
+import com.aless133.commbucks.ui.events.EventsScreen
+import com.aless133.commbucks.ui.events.EventsViewModel
+import com.aless133.commbucks.ui.event.EventScreen
+import com.aless133.commbucks.ui.event.EventViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel as viewModel
 
 val LocalNavController =
     staticCompositionLocalOf<NavController> { error("No NavController found!") }
 
 enum class CommbucksScreen() {
-    Events,
-    Event,
+    Events, Event,
 }
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,48 +51,45 @@ class MainActivity : ComponentActivity() {
         setContent {
             CommbucksTheme {
                 val navController = rememberNavController()
+                val eventsViewModel: EventsViewModel = viewModel()
+                val eventViewModel: EventViewModel = viewModel()
                 CompositionLocalProvider(LocalNavController provides navController) {
-                    // A surface container using the 'background' color from the theme
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        NavHost(
-                            navController = navController,
+                        NavHost(navController = navController,
                             startDestination = CommbucksScreen.Events.name,
-                        ) {
-                            composable(route = CommbucksScreen.Events.name,
-                                exitTransition = {
-                                    slideOutOfContainer(
-                                        AnimatedContentTransitionScope.SlideDirection.Left,
-                                        animationSpec = tween(400, 0, LinearOutSlowInEasing)
-                                    )
-                                },
-                                popEnterTransition = {
-                                    slideIntoContainer(
-                                        AnimatedContentTransitionScope.SlideDirection.Right,
-                                        animationSpec = tween(400, 0, LinearOutSlowInEasing)
-                                    )
-                                }
-                            ) {
-                                EventsScreen()
+                            enterTransition = {
+                                slideIntoContainer(
+                                    AnimatedContentTransitionScope.SlideDirection.Left,
+                                    animationSpec = tween(400, 0, LinearOutSlowInEasing)
+                                )
+                            },
+                            exitTransition = {
+                                slideOutOfContainer(
+                                    AnimatedContentTransitionScope.SlideDirection.Left,
+                                    animationSpec = tween(400, 0, LinearOutSlowInEasing)
+                                )
+                            },
+                            popEnterTransition = {
+                                slideIntoContainer(
+                                    AnimatedContentTransitionScope.SlideDirection.Right,
+                                    animationSpec = tween(400, 0, LinearOutSlowInEasing)
+                                )
+                            },
+                            popExitTransition = {
+                                slideOutOfContainer(
+                                    AnimatedContentTransitionScope.SlideDirection.Right,
+                                    animationSpec = tween(400, 0, LinearOutSlowInEasing)
+                                )
+                            })
+                        {
+                            composable(route = CommbucksScreen.Events.name) {
+                                EventsScreen(eventsViewModel)
                             }
-                            composable(
-                                route = CommbucksScreen.Event.name,
-                                enterTransition = {
-                                    slideIntoContainer(
-                                        AnimatedContentTransitionScope.SlideDirection.Left,
-                                        animationSpec = tween(400, 0, LinearOutSlowInEasing)
-                                    )
-                                },
-                                popExitTransition = {
-                                    slideOutOfContainer(
-                                        AnimatedContentTransitionScope.SlideDirection.Right,
-                                        animationSpec = tween(400, 0, LinearOutSlowInEasing)
-                                    )
-                                }
-                            ) {
-                                EventScreen()
+                            composable(route = CommbucksScreen.Event.name) {
+                                EventScreen(eventViewModel)
                             }
                         }
                     }
@@ -95,3 +98,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
