@@ -1,4 +1,4 @@
-package com.aless133.commbucks.ui
+package com.aless133.commbucks.ui.event
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -21,17 +21,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aless133.commbucks.CommbucksScreen
 import com.aless133.commbucks.LocalNavController
 import com.aless133.commbucks.R
+import com.aless133.commbucks.ui.events.EventsViewModel
 
 @Composable
 fun EventScreen(
-//    eventsViewModel: EventsViewModel = viewModel()
+    eventViewModel: EventViewModel = viewModel()
 ) {
+    val state by eventViewModel.state.collectAsState()
     val navController = LocalNavController.current
 
     Column {
         Text(
             text = "Второй экран",
         )
+
         Button(
             onClick = {
                 navController.navigateUp() //(CommbucksScreen.Events.name);
@@ -39,6 +42,29 @@ fun EventScreen(
         ) {
             Text(
                 text = "Назад",
+            )
+        }
+
+        Text(
+            text = state.activeTab.name
+        )
+
+        Button(
+            onClick = {
+                eventViewModel.activateTab(EventTabs.Members)
+            },
+        ) {
+            Text(
+                text = EventTabs.Members.name
+            )
+        }
+        Button(
+            onClick = {
+                eventViewModel.activateTab(EventTabs.Operations)
+            },
+        ) {
+            Text(
+                text = EventTabs.Operations.name
             )
         }
 
