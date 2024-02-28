@@ -3,4 +3,7 @@
     <string name="events_title">События</string>
     <string name="event_count">Участников: %s</string>
     <string name="event_budget">Бюджет: %s</string>
+    <string name="button_back">Назад</string>
+    <string name="button_menu">Меню</string>
+    <string name="button_add">Добавить</string>
 </resources>

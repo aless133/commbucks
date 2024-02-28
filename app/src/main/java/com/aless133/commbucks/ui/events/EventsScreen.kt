@@ -12,15 +12,18 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,6 +40,8 @@ import androidx.navigation.compose.rememberNavController
 import com.aless133.commbucks.CommbucksScreen
 import com.aless133.commbucks.LocalNavController
 import com.aless133.commbucks.R
+import com.aless133.commbucks.ui.components.FloatingAddButton
+import com.aless133.commbucks.ui.components.TopBar
 import com.aless133.commbucks.ui.theme.CommbucksTheme
 import com.example.commbucks.model.Event
 
@@ -45,10 +50,9 @@ fun EventsScreen(
     eventsViewModel: EventsViewModel = viewModel()
 ) {
     val state by eventsViewModel.state.collectAsState()
-
     Scaffold(
-        topBar = { EventsTopBar() },
-        floatingActionButton = { EventsAddButton() }
+        topBar = { TopBar(title = stringResource(R.string.app_name)) },
+        floatingActionButton = { FloatingAddButton() }
 //        modifier = Modifier
 //            .padding(dimensionResource(R.dimen.padding_small))
     ) { paddingValues ->
@@ -67,58 +71,17 @@ fun EventsScreen(
     }
 }
 
-@Composable
-fun EventsTopBar() {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(dimensionResource(R.dimen.padding_small)),
-    ) {
-        Text(
-            text = stringResource(R.string.app_name),
-//            modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_medium)),
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.headlineMedium,
-        )
-//        IconButton(
-//            onClick = onShareButtonClicked,
-//            modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_medium)),
-//        ) {
-//            Icon(
-//                imageVector = Icons.Filled.Share,
-//                contentDescription = stringResource(R.string.share),
-//                tint = MaterialTheme.colorScheme.onPrimary
-//            )
-//        }
-    }
-}
-
-@Composable
-fun EventsAddButton() {
-    FloatingActionButton(
-        containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary,
-        onClick = { },
-    ) {
-        Icon(Icons.Filled.Add, "Floating action button.")
-    }
-}
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventItem(event: Event) {
     val navController = LocalNavController.current
     Card(
+        onClick = { navController.navigate(CommbucksScreen.Event.name) },
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
 //            .padding(dimensionResource(id = R.dimen.padding_small))
     )
-    //        modifier = modifier,
-    //modifier = modifier
-//        border = BorderStroke(width = 1.dp, color = Color.Red)
     {
         Row(
             Modifier
@@ -147,18 +110,10 @@ fun EventItem(event: Event) {
                     )
                 }
             }
-            IconButton(
-                onClick = {
-                    Log.d("NAVIGATE", CommbucksScreen.Event.name);
-                    Log.d("NAVIGATE", navController.toString());
-                    navController.navigate(CommbucksScreen.Event.name);
-                },
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.KeyboardArrowRight,
-                    contentDescription = "Expand",
-                )
-            }
+            Icon(
+                imageVector = Icons.Filled.KeyboardArrowRight,
+                contentDescription = "Expand",
+            )
         }
     }
 }
