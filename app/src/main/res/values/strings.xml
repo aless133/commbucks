@@ -6,4 +6,6 @@
     <string name="button_back">Назад</string>
     <string name="button_menu">Меню</string>
     <string name="button_add">Добавить</string>
+    <string name="event_page_members">Участники</string>
+    <string name="event_page_operations">Операции</string>
 </resources>

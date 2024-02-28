@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class EventViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(EventUIState(activeTab = EventTabs.Members))
-    val state: StateFlow<EventUIState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(EventUIState(activePage = 0))
+    val uiState: StateFlow<EventUIState> = _uiState.asStateFlow()
 
-    fun activateTab (tab: EventTabs) {
+    fun activatePage (page: Int) {
         _uiState.update { currentState ->
-            currentState.copy(activeTab = tab)
+            currentState.copy(activePage = page)
         }
     }
 }

@@ -58,10 +58,10 @@ fun EventsScreen(
     ) { paddingValues ->
         LazyColumn(
             contentPadding = paddingValues,
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_md)),
             modifier = Modifier.padding(
-                vertical = dimensionResource(R.dimen.padding_medium),
-                horizontal = dimensionResource(R.dimen.padding_small)
+                vertical = dimensionResource(R.dimen.padding_md),
+                horizontal = dimensionResource(R.dimen.padding_sm)
             ),
         ) {
             items(state.events) { event ->
@@ -86,7 +86,7 @@ fun EventItem(event: Event) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.padding_medium)),
+                .padding(dimensionResource(R.dimen.padding_md)),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -97,7 +97,7 @@ fun EventItem(event: Event) {
                     //modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
                 )
                 Row(
-                    modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
+                    modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_sm))
                 )
                 {
                     Text(
@@ -111,10 +111,12 @@ fun EventItem(event: Event) {
                     )
                 }
             }
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowRight,
-                contentDescription = "Expand",
-            )
+//            IconButton(onClick = { navController.navigate(CommbucksScreen.Event.name) }) {
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowRight,
+                    contentDescription = "Expand",
+                )
+//            }
         }
     }
 }

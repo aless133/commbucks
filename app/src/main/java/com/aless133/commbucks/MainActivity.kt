@@ -43,7 +43,6 @@ enum class CommbucksScreen() {
     Events, Event,
 }
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 //        enableEdgeToEdge()
