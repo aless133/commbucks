@@ -88,6 +88,7 @@ fun EventItem(event: Event) {
                 .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.padding_medium)),
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Column() {
                 Text(

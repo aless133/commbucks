@@ -43,7 +43,8 @@ fun TopBar(
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.button_menu)
+                    contentDescription = stringResource(R.string.button_menu),
+                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         } else {
@@ -56,7 +57,8 @@ fun TopBar(
             }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.button_menu)
+                    contentDescription = stringResource(R.string.button_menu),
+                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         }

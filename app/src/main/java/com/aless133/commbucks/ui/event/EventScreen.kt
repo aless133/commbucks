@@ -21,6 +21,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aless133.commbucks.CommbucksScreen
 import com.aless133.commbucks.LocalNavController
 import com.aless133.commbucks.R
+import com.aless133.commbucks.ui.components.FloatingAddButton
+import com.aless133.commbucks.ui.components.TopBar
+import com.aless133.commbucks.ui.events.EventItem
 import com.aless133.commbucks.ui.events.EventsViewModel
 
 @Composable
@@ -30,43 +33,34 @@ fun EventScreen(
     val state by eventViewModel.state.collectAsState()
     val navController = LocalNavController.current
 
-    Column {
-        Text(
-            text = "Второй экран",
+    Scaffold(
+        topBar = { TopBar(title = "Второй экран") },
+    ) { paddingValues ->
+        Column (
+            modifier = Modifier.padding(paddingValues)
         )
-
-        Button(
-            onClick = {
-                navController.navigateUp() //(CommbucksScreen.Events.name);
-            },
-        ) {
+        {
             Text(
-                text = "Назад",
+                text = state.activeTab.name
             )
+            Button(
+                onClick = {
+                    eventViewModel.activateTab(EventTabs.Members)
+                },
+            ) {
+                Text(
+                    text = EventTabs.Members.name
+                )
+            }
+            Button(
+                onClick = {
+                    eventViewModel.activateTab(EventTabs.Operations)
+                },
+            ) {
+                Text(
+                    text = EventTabs.Operations.name
+                )
+            }
         }
-
-        Text(
-            text = state.activeTab.name
-        )
-
-        Button(
-            onClick = {
-                eventViewModel.activateTab(EventTabs.Members)
-            },
-        ) {
-            Text(
-                text = EventTabs.Members.name
-            )
-        }
-        Button(
-            onClick = {
-                eventViewModel.activateTab(EventTabs.Operations)
-            },
-        ) {
-            Text(
-                text = EventTabs.Operations.name
-            )
-        }
-
     }
 }
