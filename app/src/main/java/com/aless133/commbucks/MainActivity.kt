@@ -1,5 +1,7 @@
 package com.aless133.commbucks
 
+import android.content.Context
+import androidx.datastore.preferences.preferencesDataStore
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -7,17 +9,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
@@ -43,7 +38,13 @@ enum class CommbucksScreen() {
     Events, Event,
 }
 
+private const val USER_PREFERENCES_NAME = "user_preferences"
+private val Context.userDataStore by preferencesDataStore(
+    name = USER_PREFERENCES_NAME
+)
+
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
 //        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
