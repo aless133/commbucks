@@ -40,6 +40,7 @@ import androidx.navigation.compose.rememberNavController
 import com.aless133.commbucks.CommbucksScreen
 import com.aless133.commbucks.LocalNavController
 import com.aless133.commbucks.R
+import com.aless133.commbucks.model.UserPreferences
 import com.aless133.commbucks.ui.components.FloatingAddButton
 import com.aless133.commbucks.ui.components.TopBar
 import com.aless133.commbucks.ui.theme.CommbucksTheme
@@ -50,8 +51,10 @@ fun EventsScreen(
     eventsViewModel: EventsViewModel = viewModel()
 ) {
     val state by eventsViewModel.state.collectAsState()
+    val user by eventsViewModel.userPreferencesFlow.collectAsState(initial = UserPreferences())
+
     Scaffold(
-        topBar = { TopBar(title = stringResource(R.string.app_name)) },
+        topBar = { TopBar(title = stringResource(R.string.app_name) + user.name) },
         floatingActionButton = { FloatingAddButton() }
 //        modifier = Modifier
 //            .padding(dimensionResource(R.dimen.padding_small))

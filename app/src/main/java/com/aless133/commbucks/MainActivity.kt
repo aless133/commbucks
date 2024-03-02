@@ -19,6 +19,8 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.aless133.commbucks.ui.theme.CommbucksTheme
@@ -29,6 +31,8 @@ import com.aless133.commbucks.ui.events.EventsScreen
 import com.aless133.commbucks.ui.events.EventsViewModel
 import com.aless133.commbucks.ui.event.EventScreen
 import com.aless133.commbucks.ui.event.EventViewModel
+import com.aless133.commbucks.ui.events.EventsViewModelFactory
+import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel as viewModel
 
 val LocalNavController =
@@ -47,11 +51,16 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 //        enableEdgeToEdge()
+        val eventsViewModel: EventsViewModel = EventsViewModelFactory(userDataStore).create(EventsViewModel::class.java);
+        eventsViewModel.viewModelScope.launch {
+            eventsViewModel.updateUserName("Петя")
+        }
+
         super.onCreate(savedInstanceState)
         setContent {
             CommbucksTheme {
                 val navController = rememberNavController()
-                val eventsViewModel: EventsViewModel = viewModel()
+//                val eventsViewModel: EventsViewModel = viewModel()
                 val eventViewModel: EventViewModel = viewModel()
                 CompositionLocalProvider(LocalNavController provides navController) {
                     Surface(
