@@ -8,9 +8,5 @@ data class UserPreferences(
     val email: String? = null,
 )
 
-object UserPreferencesKeys {
-    val USER_NAME = stringPreferencesKey("user_name")
-    val USER_ID = stringPreferencesKey("user_id")
-    val USER_EMAIL = stringPreferencesKey("user_email")
-}
+
 

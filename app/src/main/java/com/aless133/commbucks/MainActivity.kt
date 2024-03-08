@@ -27,11 +27,13 @@ import com.aless133.commbucks.ui.theme.CommbucksTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.aless133.commbucks.data.UserPreferencesRepository
 import com.aless133.commbucks.ui.events.EventsScreen
 import com.aless133.commbucks.ui.events.EventsViewModel
+import com.aless133.commbucks.ui.events.EventsViewModelFactory
 import com.aless133.commbucks.ui.event.EventScreen
 import com.aless133.commbucks.ui.event.EventViewModel
-import com.aless133.commbucks.ui.events.EventsViewModelFactory
+import com.aless133.commbucks.ui.event.EventViewModelFactory
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel as viewModel
 
@@ -51,17 +53,22 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 //        enableEdgeToEdge()
-        val eventsViewModel: EventsViewModel = EventsViewModelFactory(userDataStore).create(EventsViewModel::class.java);
+        super.onCreate(savedInstanceState)
+
+        val eventsViewModel: EventsViewModel =
+            EventsViewModelFactory(UserPreferencesRepository(userDataStore)).create(EventsViewModel::class.java)
+
+        val eventViewModel: EventViewModel =
+            EventViewModelFactory(UserPreferencesRepository(userDataStore)).create(EventViewModel::class.java)
+
         eventsViewModel.viewModelScope.launch {
-            eventsViewModel.updateUserName("Петя")
+            eventsViewModel.userPreferencesRepository.updateUserName("Петя")
         }
 
-        super.onCreate(savedInstanceState)
         setContent {
             CommbucksTheme {
                 val navController = rememberNavController()
 //                val eventsViewModel: EventsViewModel = viewModel()
-                val eventViewModel: EventViewModel = viewModel()
                 CompositionLocalProvider(LocalNavController provides navController) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),

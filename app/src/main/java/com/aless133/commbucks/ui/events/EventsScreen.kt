@@ -51,7 +51,7 @@ fun EventsScreen(
     eventsViewModel: EventsViewModel = viewModel()
 ) {
     val state by eventsViewModel.state.collectAsState()
-    val user by eventsViewModel.userPreferencesFlow.collectAsState(initial = UserPreferences())
+    val user by eventsViewModel.userPreferencesRepository.userPreferencesFlow.collectAsState(initial = UserPreferences())
 
     Scaffold(
         topBar = { TopBar(title = stringResource(R.string.app_name) + user.name) },

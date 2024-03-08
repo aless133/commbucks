@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aless133.commbucks.LocalNavController
 import com.aless133.commbucks.R
+import com.aless133.commbucks.model.UserPreferences
 import com.aless133.commbucks.ui.components.FloatingAddButton
 import com.aless133.commbucks.ui.components.TopBar
 import kotlinx.coroutines.launch
@@ -44,6 +45,7 @@ fun EventScreen(
     )
     val eventPageMembers = pages.indexOf(stringResource(R.string.event_page_members));
     val eventPageOperations = pages.indexOf(stringResource(R.string.event_page_members));
+    val user by eventViewModel.userPreferencesRepository.userPreferencesFlow.collectAsState(initial = UserPreferences())
 
     Scaffold(
         topBar = { TopBar(title = "Второй экран") },
@@ -64,7 +66,7 @@ fun EventScreen(
                             eventViewModel.activatePage(index)
                         }) {
                         Text(
-                            text = title,
+                            text = title + user.name,
                             style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.padding(vertical = dimensionResource(R.dimen.padding_sm))
                         )
